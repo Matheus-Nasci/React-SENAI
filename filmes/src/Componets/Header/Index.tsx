@@ -1,9 +1,16 @@
 import React from 'react';
+import './style.css';
+import '../../Assets/Style/global.css';
+import logo from '../../Assets/Images/logo.png';
 
 function Header() {
   return (
-    <div>
-      <h1>Cabeçalho</h1>
+    <div className="principal">
+      <div className="header">
+          <nav>
+            <img src={logo} alt="Logo da aplicação"/>
+          </nav>
+      </div>
     </div>
   );
 }

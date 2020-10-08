@@ -1,0 +1,39 @@
+.footer{
+    padding-left: 550px;
+    background-color: #F6511D;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.text{
+    flex-direction: column;
+    color: white;
+    padding-left: 50px;
+
+}
+
+/*PROJETO FILMES*/
+
+/*.pe {
+    position: relative;
+    width: 50vw;
+    height: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    align-self: center;
+}*/
+
+/*.footer {
+    position: relative;
+    background-color: #F6511D;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    clear: both;
+    position: relative;
+    height: 250px;
+    margin-top: 200px;
+} */
