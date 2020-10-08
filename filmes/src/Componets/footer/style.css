@@ -1,5 +1,5 @@
 .footer{
-    padding-left: 550px;
+    padding-left: 425px;
     background-color: #F6511D;
     padding-top: 50px;
     padding-bottom: 50px;
@@ -8,32 +8,16 @@
 }
 
 .text{
-    flex-direction: column;
     color: white;
     padding-left: 50px;
-
+    line-height: 2.0;
 }
 
-/*PROJETO FILMES*/
-
-/*.pe {
-    position: relative;
-    width: 50vw;
-    height: 25vh;
+.footer hr{
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-    align-self: center;
-}*/
+    height: 150px;
+}
 
-/*.footer {
-    position: relative;
-    background-color: #F6511D;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    clear: both;
-    position: relative;
-    height: 250px;
-    margin-top: 200px;
-} */
+#imgRodape{
+    padding-right: 40px;
+}

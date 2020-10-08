@@ -7,7 +7,9 @@ function Footer() {
         <div className="principal">
             <div className="footer">
 
-                <img src={imgRodape} alt="Imagem Rodapé"/>
+                <img id="imgRodape" src={imgRodape} alt="Imagem Rodapé"/>
+
+                <hr/>
 
                 <div className="text">
 

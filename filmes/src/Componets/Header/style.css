@@ -5,6 +5,36 @@
 }
 
 nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.align{
     width: 1024px;
     margin: auto;
+}
+
+.menu{
+    list-style: none; /*Tirar marcador do List*/
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.menu .link{
+    color: #4B2142;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.menu .link:hover{
+    color: #8C417C;
+    border-bottom: 2px solid #8C417C;
+    padding-bottom: 5px;
+}
+
+.align h3{
+    padding-top: 25px;
 }
