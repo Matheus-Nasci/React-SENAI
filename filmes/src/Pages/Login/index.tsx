@@ -1,27 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './main.css';
 import Header from '../../Componets/Header/Index';
 import Footer from '../../Componets/footer/index';
-import '../../Assets/Style/global.css'
 import Input from '../../Componets/input/index';
+import '../../Assets/Style/global.css';
+import {useHistory} from 'react-router-dom';
+import Button from '../../Componets/button';
 
 function Login() {
+
+    let history = useHistory();
+
+    const[email, setEmail] = useState('');
+    const[senha, setSenha] = useState('');
+    
+    const login = () =>{
+        const login = {
+            email: email,
+            senha: senha
+        }
+
+        fetch('http://localhost:5000/api/conta/login',{
+            method:'POST',
+            body: JSON.stringify(login),
+            headers:{
+                'content-ty' : 'application/json'
+            }
+        }
+        )
+
+        .then(response => response.json())
+        .then (dados=>{
+            if(dados.token !==undefined || dados.token !==null|| dados.token !=='')
+            {
+                localStorage.setItem('token-filmes', dados.token)
+                history.push('/');
+            }else{
+                alert("Senha ou E-mail incorretos")
+            }
+        })
+        .catch(error=>console.error(error))
+    }
+    
     return (
-        <div>
+        <div className="principal">
             <Header description="Faça o login para acessar a Coletanea" />
             <div className="centro">
                 <div className="login">
-                    <main>
-                        <h1>Login</h1>
-                        <Input type="e-mail" name="email" label="E-mail" />
-                        <Input type="password" name="senha" label="Senha" />
-                        <div className="botao">
-                            <button>Enviar</button>
+                    <form onSubmit={event=>{
+                        event.preventDefault()
+                        login()
+                    }}>
+                      <h1>Login</h1>
+                      <div className="inputs">
+                        <Input type="email" name="email" label="E-mail" onChange={e => setEmail(e.target.value)}/>
+                        <Input type="password" name="senha" label="Senha" onChange={s => setSenha(s.target.value)}/>
+                        <div className="btn">
+                            <Button onClick value="Enviar"/>
                         </div>
-                    </main>
+                      </div>
+                    </form>
                 </div>
             </div>
-            <Footer />
+            <Footer/>
         </div>
     );
 }

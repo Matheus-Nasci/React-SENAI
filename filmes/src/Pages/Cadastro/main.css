@@ -1,3 +1,22 @@
-main{
-    min-height: 60vh;
+form{
+    min-height: 30vh;
 }
+
+.cadastro{
+    padding-bottom: 20px;
+}
+
+.btn-cadastro{
+    display: flex;
+    padding-top: 10px;
+    padding-left: 55px;
+    padding-bottom: 10px;
+}
+
+h1{
+    padding-top: 30px;
+}
+
+.inputs{
+    line-height: 30px;
+ }

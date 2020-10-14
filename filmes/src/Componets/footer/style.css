@@ -1,16 +1,10 @@
 .footer{
-    padding-left: 425px;
+    padding-left: 555px;
     background-color: #F6511D;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
     align-items: center;
-}
-
-.text{
-    color: white;
-    padding-left: 50px;
-    line-height: 2.0;
 }
 
 .footer hr{
@@ -19,5 +13,11 @@
 }
 
 #imgRodape{
-    padding-right: 40px;
+    padding-right: 50px;
+}
+
+.texto{
+    color: white;
+    padding-left: 50px;
+    line-height: 30px;
 }

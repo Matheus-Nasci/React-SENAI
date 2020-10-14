@@ -1,24 +1,17 @@
-main{
-    min-height: 41vh;
+form{
+    min-height: 50vh;
 }
 
 .login{
     padding: 40px;
+}
+
+.btn{
     display: flex;
-    
-}
-
-button{
-    color: white;
-    border: none;
-    width: 180px;
-    height: 58px;
-    align-items: center;
-
-    background: #F6511D;
-}
-
-.botao{
     padding-top: 10px;
-    padding-left: 115px;
-}
+    padding-left: 55px;
+ }
+
+ .inputs{
+    line-height: 30px;
+ }

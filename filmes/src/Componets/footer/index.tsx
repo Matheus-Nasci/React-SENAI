@@ -11,7 +11,7 @@ function Footer() {
 
                 <hr/>
 
-                <div className="text">
+                <div className="texto">
 
                     <p>Company Inc., 8901 Marmora Road, Glasgow, D04 89GR</p>
 
