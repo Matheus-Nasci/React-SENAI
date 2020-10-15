@@ -31,7 +31,7 @@ function Login() {
 
         .then(response => response.json())
         .then (dados=>{
-            if(dados.token !==undefined || dados.token !==null|| dados.token !=='')
+            if(dados.token !== undefined || dados.token !==null|| dados.token !=='')
             {
                 localStorage.setItem('token-filmes', dados.token)
                 history.push('/');
@@ -54,7 +54,7 @@ function Login() {
                       <h1>Login</h1>
                       <div className="inputs">
                         <Input type="email" name="email" label="E-mail" onChange={e => setEmail(e.target.value)}/>
-                        <Input type="password" name="senha" label="Senha" onChange={s => setSenha(s.target.value)}/>
+                        <Input type="password" name="senha" label="Senha" onChange={e => setSenha(e.target.value)}/>
                         <div className="btn">
                             <Button onClick value="Enviar"/>
                         </div>
