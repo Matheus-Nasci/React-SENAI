@@ -1,82 +1,79 @@
-import React, { useState, useEffect } from 'react';
-import Footer from '../../Componets/footer/index';
+import React, { useEffect, useState } from 'react';
 import Header from '../../Componets/Header/Index';
-import Input from '../../Componets/input/index';
+import Footer from '../../Componets/footer/index';
 import Button from '../../Componets/button/index';
+import Input from '../../Componets/input/index';
 
-import imgCinema from '../../Assets/Images/cinema.png';
+
 import imgRefresh from '../../Assets/Images/refresh.png';
 import imgTrash from '../../Assets/Images/trash.png';
+import imgCinema from '../../Assets/Images/cinema.png';
 import '../../Assets/Style/global.css';
-import './main.css'
 
-function Filmes() {
+function Filme() {
 
     const [idFilme, setIdFilme] = useState(0);
     const [filme, setFilme] = useState('');
 
     const [filmes, setFilmes] = useState([]);
 
+    const [genero, setGenero] = useState('');
+    const [generos, setGeneros] = useState([]);
+
     useEffect(() => {
         listar();
-    }, [])
+    }, []);
 
     const listar = () => {
         fetch('http://localhost:5000/api/filmes', {
             method: 'GET',
-
             headers: {
-                authorization: 'Bearer' + localStorage.getItem('token-filmes')
+                authorization: 'Bearer ' + localStorage.getItem('token-filmes')
             }
         })
             .then(response => response.json())
             .then(dados => {
                 setFilmes(dados);
+                setGenero(dados.IdGeneroNavigation.nome);
+
             })
-            .catch(erro => console.error(erro));
+            .catch(err => console.error(err));
     }
 
-    //Deletar
     const trash = (id: number) => {
         if (window.confirm('Deseja excluir o Filme?')) {
-            fetch('http://localhost:5000/api/filmes' + id, {
+            fetch('http://localhost:5000/api/filmes/' + id, {
                 method: 'DELETE',
                 headers: {
-                    authorization: 'Bearer' + localStorage.getItem('token-filmes')
+                    authorization: 'Bearer ' + localStorage.getItem('token-filmes')
                 }
-
             })
-
                 .then(response => response.json())
                 .then(dados => {
-                    dados.listar()
+                    listar();
                 })
-                .catch(erro => console.error(erro))
-
+                .catch(err => console.error(err));
         }
     }
 
-    //Atualizar
     const refresh = (id: number) => {
         fetch('http://localhost:5000/api/filmes/' + id, {
             method: 'GET',
             headers: {
-                authorization: 'Bearer' + localStorage.getItem('token-filmes')
+                authorization: 'Bearer ' + localStorage.getItem('token-filmes')
             }
         })
             .then(response => response.json())
             .then(dados => {
                 setIdFilme(dados.idFilme);
-                setFilme(dados.nome);
+                setFilme(dados.titulo);
             })
-            .catch(erro => console.error(erro));
+            .catch(err => console.error(err));
     }
-
-    //Cadastrar Genero
 
     const salvar = () => {
         const form = {
-            nome: filme
+            titulo: filme
         };
 
         const method = (idFilme === 0 ? 'POST' : 'PUT');
@@ -87,7 +84,7 @@ function Filmes() {
             body: JSON.stringify(form),
             headers: {
                 'content-type': 'application/json',
-                authorization: 'Bearer' + localStorage.getItem('token-filmes')
+                authorization: 'Bearer ' + localStorage.getItem('token-filmes')
             }
         })
             .then(() => {
@@ -96,36 +93,38 @@ function Filmes() {
                 setFilme('');
                 listar();
             })
-            .catch(erro => console.error(erro));
+            .catch(err => console.error(err));
     }
 
     return (
         <div>
-            <Header description="Cadastre os filmes de sua preferência" />
+            <Header description="Cadastre os Filmes" />
             <div className="centro">
-                <div className="filmes">
-                    <title>Filmes</title>
-                    <h1>Filmes</h1>
+                <main>
+                    <h1>Filme</h1>
                     <div className="imgTitulo">
-                        <img src={imgCinema} alt="" className="theater" width="100" />
+                        <img className="theater" src={imgCinema} alt="" width="100" />
                     </div>
                     <table>
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Filmes</th>
+                                <th>Filme</th>
+                                <th>Gênero</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 filmes.map((item: any) => {
                                     return (
-                                        <tr key={item.idGenero}>
-                                            <td>{item.idGenero}</td>
-                                            <td>{item.nome}</td>
+                                        <tr key={item.idFilme}>
+                                            <td>{item.idFilme}</td>
+                                            <td>{item.titulo}</td>
+                                            <td>{item.genero.nome}</td>
                                             <td>
-                                                <img className="icon" src={imgRefresh} alt="" onClick={() => refresh(item.idGenero)} />
-                                                <img className="icon" src={imgTrash} alt="" onClick={() => trash(item.idGenero)} />
+                                                <img className="icon" src={imgRefresh} onClick={() => refresh(item.idFilme)} alt="" width="40" />
+                                                <img className="icon" src={imgTrash} onClick={() => trash(item.idFilme)} alt="" width="40" />
                                             </td>
                                         </tr>
                                     )
@@ -133,22 +132,36 @@ function Filmes() {
                             }
                         </tbody>
                     </table>
+
+                    <div className="form">
+
+                        <Input name="filme" label="Cadastrar Filme" value={filme} onChange={e => setFilme(e.target.value)} />
+                        
+                        <select name="genero" onChange={e => setGenero(e.target.value)} value={genero}>
+                            <option value="0">Selecione um Gênero</option>
+                            {
+                                generos.map((item: any) => {
+                                    return <option value={item.idGenero}>{item.generos.nome}</option>
+                                })
+                            }
+                        </select>
+
+                    </div>
+
                     <form onSubmit={event => {
                         event.preventDefault();
                         salvar();
                     }}>
-                    </form>
-                    <div className="form">
-                        <Input name="genero" label="Cadastrar gênero" value={filme} onChange={e => setFilme(e.target.value)} />
+
                         <div className="btn">
                             <Button onClick value="Salvar" />
                         </div>
-                    </div>
-                </div>
+                    </form>
+                </main>
             </div>
             <Footer />
         </div>
     );
 }
 
-export default Filmes;
+export default Filme;

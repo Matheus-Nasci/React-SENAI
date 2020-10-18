@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import Footer from '../../Componets/footer/index';
+import React, { useEffect, useState } from 'react';
 import Header from '../../Componets/Header/Index';
-import Input from '../../Componets/input/index';
+import Footer from '../../Componets/footer/index';
 import Button from '../../Componets/button/index';
+import Input from '../../Componets/input/index';
 
-import imgTheater from '../../Assets/Images/theater.png';
+
 import imgRefresh from '../../Assets/Images/refresh.png';
 import imgTrash from '../../Assets/Images/trash.png';
+import imgTheater from '../../Assets/Images/theater.png';
 import '../../Assets/Style/global.css';
-
 
 function Genero() {
 
@@ -19,49 +19,43 @@ function Genero() {
 
     useEffect(() => {
         listar();
-    }, [])
+    }, []);
 
     const listar = () => {
         fetch('http://localhost:5000/api/generos', {
             method: 'GET',
-
             headers: {
-                authorization: 'Bearer' + localStorage.getItem('token-filmes')
+                authorization: 'Bearer ' + localStorage.getItem('token-filmes')
             }
         })
             .then(response => response.json())
             .then(dados => {
                 setGeneros(dados);
             })
-            .catch(erro => console.error(erro));
+            .catch(err => console.error(err));
     }
 
-    //Deletar
     const trash = (id: number) => {
         if (window.confirm('Deseja excluir o Genero?')) {
-            fetch('http://localhost:5000/api/generos' + id, {
+            fetch('http://localhost:5000/api/generos/' + id, {
                 method: 'DELETE',
                 headers: {
-                    authorization: 'Bearer' + localStorage.getItem('token-filmes')
+                    authorization: 'Bearer ' + localStorage.getItem('token-filmes')
                 }
-
             })
-
                 .then(response => response.json())
                 .then(dados => {
-                    dados.listar()
+                    listar();
                 })
-                .catch(erro => console.error(erro))
-
+                .catch(err => console.error(err));
         }
     }
 
-    //Atualizar
     const refresh = (id: number) => {
         fetch('http://localhost:5000/api/generos/' + id, {
             method: 'GET',
             headers: {
-                authorization: 'Bearer' + localStorage.getItem('token-filmes')
+                authorization: 'Bearer ' + localStorage.getItem('token-filmes')
             }
         })
             .then(response => response.json())
@@ -69,10 +63,8 @@ function Genero() {
                 setIdGenero(dados.idGenero);
                 setGenero(dados.nome);
             })
-            .catch(erro => console.error(erro));
+            .catch(err => console.error(err));
     }
-
-    //Cadastrar Genero
 
     const salvar = () => {
         const form = {
@@ -87,7 +79,7 @@ function Genero() {
             body: JSON.stringify(form),
             headers: {
                 'content-type': 'application/json',
-                authorization: 'Bearer' + localStorage.getItem('token-filmes')
+                authorization: 'Bearer ' + localStorage.getItem('token-filmes')
             }
         })
             .then(() => {
@@ -96,64 +88,64 @@ function Genero() {
                 setGenero('');
                 listar();
             })
-            .catch(erro => console.error(erro));
+            .catch(err => console.error(err));
     }
-
-
 
     return (
         <div>
-            <Header description="Cadastre os gêneros dos filmes" />
+            <Header description="Cadastre os Gêneros dos Filmes" />
             <div className="centro">
+                <main>
+                    <h1>Gênero</h1>
+                    <div className="imgTitulo">
+                        <img className="theater" src={imgTheater} alt="" width="100" />
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Gênero</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                generos.map((item: any) => {
+                                    return (
+                                        <tr key={item.idGenero}>
+                                            <td>{item.idGenero}</td>
+                                            <td>{item.nome}</td>
+                                            <td>
+                                                <img className="icon" src={imgRefresh} onClick={() => refresh(item.idGenero)} alt="" width="40" />
+                                                <img className="icon" src={imgTrash} onClick={() => trash(item.idGenero)} alt="" width="40" />
+                                                {/* <input type="button" onClick={() => editar(item.idGenero)} /> */}
+                                                {/* <input type="button" onClick={() => remover(item.idGenero)} /> */}
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
 
-                <div className="genero">
-                    <main>
-                        <h1>Gêneros</h1>
-                        <div className="imgTitulo">
-                            <img src={imgTheater} alt="" className="theater" width="100" />
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Gênero</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    generos.map((item: any) => {
-                                        return (
-                                            <tr key={item.idGenero}>
-                                                <td>{item.idGenero}</td>
-                                                <td>{item.nome}</td>
-                                                <td>
-                                                    <img className="icon" src={imgRefresh} alt="" onClick={() => refresh(item.idGenero)} />
-                                                    <img className="icon" src={imgTrash} alt="" onClick={() => trash(item.idGenero)} />
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                        <form onSubmit={event => {
-                            event.preventDefault();
-                            salvar();
-                        }}>
+                    <form onSubmit={event => {
+                        event.preventDefault();
+                        salvar();
+                    }}>
 
-                        </form>
-                        <div className="form">
-                            <Input name="genero" label="Cadastrar gênero" value={genero} onChange={e => setGenero(e.target.value)} />
-                            <div className="btn">
-                                <Button onClick value="Salvar" />
-                            </div>
+                        <Input name="genero" label="Cadastrar genero" value={genero} onChange={e => setGenero(e.target.value)} />
+
+                        <div className="btn">
+                            <Button onClick value="Salvar" />
                         </div>
-                    </main>
-                </div>
+
+                    </form>
+                </main>
             </div>
             <Footer />
+
         </div>
+
     );
 }
 

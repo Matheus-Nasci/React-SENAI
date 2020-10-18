@@ -1,9 +1,5 @@
-main{
-    min-height: 50vh;
-}
-
 .home{
-    padding: 40px;
+    padding: 31px;
     display: flex;  
 }
 
