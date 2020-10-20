@@ -3,6 +3,7 @@ import './style.css';
 import '../../Assets/Style/global.css';
 import logo from '../../Assets/Images/logo.png';
 import { Link, useHistory } from 'react-router-dom';
+import { parseJwt } from '../../Services/auth';
 
 interface HeaderProps {
   description: string;
@@ -25,15 +26,17 @@ const Header: React.FC<HeaderProps> = (props) => {
       return (
         <ul className="menu">
           <li><Link className="link" to="/">Home</Link></li>
-          <li><Link className="link" to="/lista-filme">Filme</Link></li>
+          {/* <li><Link className="link" to="/lista-filme">Filme</Link></li> */}
           <li><Link className="link" to="/login">Login</Link></li>
           <li><Link className="link" to="/cadastro">Cadastro</Link></li>
         </ul>
       )
     } else {
 
-      return(
-        <ul className="menu">
+      if(parseJwt().Role === 'Administrador'){
+
+        return(
+          <ul className="menu">
           <li><Link className="link" to="/">Home</Link></li>
           <li><Link className="link" to="/filme">Filme</Link></li>
           <li><Link className="link" to="/genero">Genero</Link></li>
@@ -45,6 +48,21 @@ const Header: React.FC<HeaderProps> = (props) => {
 
           </ul>
       );
+      }else{
+
+        return(
+          <ul className="menu">
+          <li><Link className="link" to="/">Home</Link></li>
+          <li><Link className="link" to="/filme">Filme</Link></li>
+          <li><Link to="" onClick={event => {
+            event.preventDefault();
+            logout();
+          }}>Logout</Link></li>
+
+          </ul>
+      );
+      }
+    
     }
   }
 
