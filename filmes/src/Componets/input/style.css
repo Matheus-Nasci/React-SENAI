@@ -4,3 +4,11 @@ input{
 
     border: 1px solid #000000;
 }
+
+select{
+    width: 200px;
+    height: 58px;
+
+    border: 1px solid #000000;
+}
+

@@ -9,6 +9,7 @@ import imgRefresh from '../../Assets/Images/refresh.png';
 import imgTrash from '../../Assets/Images/trash.png';
 import imgTheater from '../../Assets/Images/theater.png';
 import '../../Assets/Style/global.css';
+import './main.css';
 
 function Genero() {
 
@@ -100,45 +101,51 @@ function Genero() {
                     <div className="imgTitulo">
                         <img className="theater" src={imgTheater} alt="" width="100" />
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Gênero</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                generos.map((item: any) => {
-                                    return (
-                                        <tr key={item.idGenero}>
-                                            <td>{item.idGenero}</td>
-                                            <td>{item.nome}</td>
-                                            <td>
-                                                <img className="icon" src={imgRefresh} onClick={() => refresh(item.idGenero)} alt="" width="40" />
-                                                <img className="icon" src={imgTrash} onClick={() => trash(item.idGenero)} alt="" width="40" />
-                                                {/* <input type="button" onClick={() => editar(item.idGenero)} /> */}
-                                                {/* <input type="button" onClick={() => remover(item.idGenero)} /> */}
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                    <section id="tabela-genero">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Gênero</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    generos.map((item: any) => {
+                                        return (
+                                            <tr key={item.idGenero}>
+                                                <td>{item.idGenero}</td>
+                                                <td>{item.nome}</td>
+                                                <td>
+                                                    <img className="icon" src={imgRefresh} onClick={() => refresh(item.idGenero)} alt="" width="40" />
+                                                    <img className="icon" src={imgTrash} onClick={() => trash(item.idGenero)} alt="" width="40" />
+                                                    {/* <input type="button" onClick={() => editar(item.idGenero)} /> */}
+                                                    {/* <input type="button" onClick={() => remover(item.idGenero)} /> */}
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    </section>
 
                     <form onSubmit={event => {
                         event.preventDefault();
                         salvar();
                     }}>
 
-                        <Input name="genero" label="Cadastrar genero" value={genero} onChange={e => setGenero(e.target.value)} />
+                        <div className="input-genero">
+                            <div className="formGenero">
+                                <Input name="genero" label="Cadastrar genero" value={genero} onChange={e => setGenero(e.target.value)} />
+                            </div>
 
-                        <div className="btn">
-                            <Button onClick value="Salvar" />
+                            <div className="btnGenero">
+                                <Button onClick value="Salvar" />
+                            </div>
+
                         </div>
-
                     </form>
                 </main>
             </div>

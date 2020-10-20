@@ -9,6 +9,7 @@ import imgRefresh from '../../Assets/Images/refresh.png';
 import imgTrash from '../../Assets/Images/trash.png';
 import imgCinema from '../../Assets/Images/cinema.png';
 import '../../Assets/Style/global.css';
+import './main.css';
 
 function Filme() {
 
@@ -34,7 +35,7 @@ function Filme() {
             .then(response => response.json())
             .then(dados => {
                 setFilmes(dados);
-                setGenero(dados.IdGeneroNavigation.nome);
+                console.log('' + filmes)
 
             })
             .catch(err => console.error(err));
@@ -72,8 +73,10 @@ function Filme() {
     }
 
     const salvar = () => {
+        var idGenero2 = parseInt(genero);
         const form = {
-            titulo: filme
+            titulo: filme,
+            idGenero: idGenero2
         };
 
         const method = (idFilme === 0 ? 'POST' : 'PUT');
@@ -96,6 +99,25 @@ function Filme() {
             .catch(err => console.error(err));
     }
 
+    useEffect(() => {
+        listargenero();
+    }, []);
+
+    const listargenero = () => {
+        fetch('http://localhost:5000/api/generos', {
+            method: 'GET',
+            headers: {
+                authorization: 'Bearer ' + localStorage.getItem('token-filmes')
+            }
+        })
+            .then(response => response.json())
+            .then(dados => {
+                setGeneros(dados);
+                console.log('' + generos)
+            })
+            .catch(err => console.error(err));
+    }
+
     return (
         <div>
             <Header description="Cadastre os Filmes" />
@@ -105,7 +127,7 @@ function Filme() {
                     <div className="imgTitulo">
                         <img className="theater" src={imgCinema} alt="" width="100" />
                     </div>
-                    <table>
+                    <table id="tabelaFilmes">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -133,28 +155,31 @@ function Filme() {
                         </tbody>
                     </table>
 
-                    <div className="form">
-
-                        <Input name="filme" label="Cadastrar Filme" value={filme} onChange={e => setFilme(e.target.value)} />
-                        
-                        <select name="genero" onChange={e => setGenero(e.target.value)} value={genero}>
-                            <option value="0">Selecione um Gênero</option>
-                            {
-                                generos.map((item: any) => {
-                                    return <option value={item.idGenero}>{item.generos.nome}</option>
-                                })
-                            }
-                        </select>
-
-                    </div>
-
                     <form onSubmit={event => {
                         event.preventDefault();
                         salvar();
                     }}>
 
-                        <div className="btn">
-                            <Button onClick value="Salvar" />
+                        <div className="formFilme">
+
+                            <div>
+                                <Input name="filme" label="Cadastrar Filme" value={filme} onChange={e => setFilme(e.target.value)} />
+                            </div>
+
+                            <div className="selectFilmes">
+
+                                <select name="genero" onChange={e => setGenero(e.target.value)} value={genero}>
+                                    <option value="0">Selecione um Gênero</option>
+                                    {
+                                        generos.map((item: any) => {
+                                            return <option value={item.idGenero}>{item.nome}</option>
+                                        })
+                                    }
+                                </select>
+                            </div>
+                            <div className="btnFilmes">
+                                <Button onClick value="Salvar" />
+                            </div>
                         </div>
                     </form>
                 </main>

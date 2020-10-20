@@ -25,6 +25,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       return (
         <ul className="menu">
           <li><Link className="link" to="/">Home</Link></li>
+          <li><Link className="link" to="/lista-filme">Filme</Link></li>
           <li><Link className="link" to="/login">Login</Link></li>
           <li><Link className="link" to="/cadastro">Cadastro</Link></li>
         </ul>

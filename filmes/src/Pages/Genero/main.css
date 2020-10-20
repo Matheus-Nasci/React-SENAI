@@ -2,3 +2,38 @@
     display: flex;
     justify-content: center;
 }
+
+.formGenero {
+    display: flex;
+    flex-direction: row;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    
+}
+
+#tabela-genero {
+    padding-top: 30px;
+}
+
+#tabela-genero td {
+    padding: 5px 20px 10px 20px;
+    max-width: 150px;
+    
+}
+
+#tabela-genero th {
+    border-radius: 1px;
+    padding: 10px;
+    background-color: rgb(233, 229, 229);
+}
+
+.btnGenero{
+    display: flex;
+    padding-left: 20px;
+    margin-bottom: 50px;
+    margin-top: 60px;
+}
+
+.input-genero{
+    display: flex;
+}
